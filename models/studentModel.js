@@ -19,6 +19,7 @@ const studentSchema = mongoose.Schema({
     // validate(value) {
     //   if (value < 0) throw new Error('Valor negativo para nota não permitido');
     // },
+    // Força que o valor seja positivo
     min: 0,
   },
   lastModified: {
