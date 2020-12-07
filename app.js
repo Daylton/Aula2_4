@@ -1,28 +1,34 @@
 // Imports
-import express from 'express';
-import mongoose from 'mongoose';
+import express from "express";
+import mongoose from "mongoose";
+//import dotenv from 'dotenv'
 
-import { studentRouter } from './routes/studentRouter.js';
+import { studentRouter } from "./routes/studentRouter.js";
+
+process.env.USER_DB = "admin";
+
+const app = express();
+
+require('dotenv').config();
 
 // Conectar ao MongoDB pelo Mongoose
 (async () => {
   try {
     await mongoose.connect(
-      'mongodb+srv://admin:MNotlyad14*B@cluster0.h9u45.mongodb.net/grades?retryWrites=true&w=majority',
+      `mongodb+srv://${process.env.USERDB}:${process.env.PWDDB}@cluster0.h9u45.mongodb.net/grades?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       },
-      console.log('Conectado ao Mongoose')
+      console.log("Conectado ao Mongoose")
     );
   } catch (error) {
-    console.log('Erro ao conectar no Mongodb' + error);
+    console.log("Erro ao conectar no Mongodb" + error);
   }
 })();
 
-const app = express();
 app.use(express.json());
 app.use(studentRouter);
 
 // Porta
-app.listen(3000, () => console.log('API iniciada'));
+app.listen(process.env.PORT, () => console.log("API iniciada"));
