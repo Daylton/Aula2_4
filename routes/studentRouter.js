@@ -1,12 +1,12 @@
-import express from 'express';
-import { studentModel } from '../models/studentModel.js';
+import express from "express";
+import { studentModel } from "../models/studentModel.js";
 
 const app = express();
 
 // Create
-app.post('/student', async (req, res) => {
+app.post("/student", async (req, res) => {
   try {
-    const student =  new studentModel(req.body);
+    const student = new studentModel(req.body);
 
     await student.save();
 
@@ -17,7 +17,7 @@ app.post('/student', async (req, res) => {
 });
 
 // Retrieve
-app.get('/student', async (req, res) => {
+app.get("/student", async (req, res) => {
   try {
     const student = await studentModel.find({});
     res.send(student);
@@ -27,26 +27,49 @@ app.get('/student', async (req, res) => {
 });
 
 // Update
-app.patch('/student/:id', async (req, res) => {
+app.patch("/student/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
-    const student = await studentModel.findByIdAndUpdate({ _id: id }, req.body, {
-      new: true,
-    });
+    const student = await studentModel.findByIdAndUpdate(
+      { _id: id },
+      req.body,
+      {
+        new: true,
+      }
+    );
     res.send(student);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
+// Update com PUT
+app.put("/student/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const student = await studentModel.findByIdAndUpdate(
+      { _id: id },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.send(student);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 // Delete
-app.delete('/student/:id', async (req, res) => {
+app.delete("/student/:id", async (req, res) => {
   try {
-    const student = await studentModel.findByIdAndDelete({ _id: req.params.id });
+    const student = await studentModel.findByIdAndDelete({
+      _id: req.params.id,
+    });
     if (!student) {
-      res.status(404).send('Documento não encontrado na coleção');
+      res.status(404).send("Documento não encontrado na coleção");
     } else {
       res.send(200).send();
     }
