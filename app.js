@@ -1,6 +1,8 @@
 // Imports
 import express from "express";
 import mongoose from "mongoose";
+import "./config.js";
+//import {} from 'dotenv/config'
 //import dotenv from 'dotenv'
 
 import { studentRouter } from "./routes/studentRouter.js";
@@ -9,7 +11,7 @@ process.env.USER_DB = "admin";
 
 const app = express();
 
-require('dotenv').config();
+//require('dotenv').config();
 
 // Conectar ao MongoDB pelo Mongoose
 (async () => {
